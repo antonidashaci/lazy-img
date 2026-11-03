@@ -1,5 +1,7 @@
 # lazy-img
 
+**[Open the demo page →](https://antonidashaci.github.io/lazy-img/demo.html)**
+
 `<lazy-img>` — a lazy, responsive image element that **reserves its own space**,
 fades in from a blurred placeholder, generates a `srcset`, and retries a failed
 request instead of leaving a hole. Zero dependencies, ~200 lines.
