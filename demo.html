@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lazy-img demo</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fbfbfa; --fg:#16150f; --muted:#6b6a63; --line:#e3e2dc; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14140f; --fg:#f0efe8; --muted:#9a998f; --line:#2c2b24; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:32px 16px; background:var(--bg); color:var(--fg);
+         font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif; }
+  main { max-width: 760px; margin: 0 auto; }
+  h1 { font-size:1.4rem; margin:0 0 6px; }
+  p.lede { color:var(--muted); margin:0 0 28px; }
+  h2 { font-size:1rem; margin:40px 0 10px; }
+  .grid { display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+  lazy-img { border-radius:10px; border:1px solid var(--line); --lazy-img-bg:#dddcd6; }
+  .spacer { height:90vh; display:grid; place-items:center; color:var(--muted);
+            border-top:1px dashed var(--line); border-bottom:1px dashed var(--line); margin:32px 0; }
+  code { font-family:ui-monospace,Menlo,monospace; font-size:.85em; }
+  #log { margin-top:24px; color:var(--muted); font-size:.85rem; font-family:ui-monospace,monospace;
+         white-space:pre-wrap; }
+</style>
+</head>
+<body>
+<main>
+  <h1>&lt;lazy-img&gt;</h1>
+  <p class="lede">Scroll down. Each image reserves its space first, so nothing on this page jumps.</p>
+
+  <h2>Above the fold</h2>
+  <div class="grid">
+    <lazy-img src="https://picsum.photos/id/1015/800/600" width="800" height="600"
+              alt="A river between pine trees"></lazy-img>
+    <lazy-img src="https://picsum.photos/id/1025/800/600" width="800" height="600"
+              alt="A pug wrapped in a blanket"></lazy-img>
+  </div>
+
+  <div class="spacer">— scroll —</div>
+
+  <h2>Below the fold (loads on approach)</h2>
+  <div class="grid">
+    <lazy-img src="https://picsum.photos/id/1039/1200/800" width="1200" height="800"
+              alt="A waterfall seen from above"></lazy-img>
+    <lazy-img src="https://picsum.photos/id/1043/1200/800" width="1200" height="800"
+              alt="A train track running through a forest"></lazy-img>
+  </div>
+
+  <h2>Error state, after its retries</h2>
+  <div class="grid">
+    <lazy-img src="https://example.invalid/nope.jpg" width="800" height="600"
+              retries="1" alt="Deliberately broken" error-text="Could not load"></lazy-img>
+  </div>
+
+  <h2>Reserved space with no dimensions</h2>
+  <p class="lede">Without <code>width</code> and <code>height</code> there is no ratio to reserve, so
+    give the host a size in CSS instead — the component will not guess one.</p>
+  <div class="grid">
+    <lazy-img style="height:200px" src="https://picsum.photos/id/1062/800/600"
+              alt="A boat on still water"></lazy-img>
+  </div>
+
+  <div id="log"></div>
+</main>
+
+<script type="module">
+  import './index.js';
+
+  const log = document.getElementById('log');
+  const line = (text) => { log.textContent += text + '\n'; };
+
+  document.addEventListener('lazyload', (event) =>
+    line(`loaded  ${event.target.getAttribute('alt')}`));
+  document.addEventListener('lazyerror', (event) =>
+    line(`failed  ${event.target.getAttribute('alt')}`));
+</script>
+</body>
+</html>

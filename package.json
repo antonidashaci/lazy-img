@@ -1,0 +1,44 @@
+{
+  "name": "lazy-img-element",
+  "version": "1.0.0",
+  "description": "<lazy-img>: a lazy, responsive custom element that reserves its own space, fades in from a blur placeholder and retries failures. No dependencies.",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./core": "./core.js"
+  },
+  "files": [
+    "index.js",
+    "core.js",
+    "demo.html",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "lazy-loading",
+    "custom-element",
+    "web-component",
+    "responsive-images",
+    "srcset",
+    "layout-shift",
+    "cls",
+    "performance",
+    "zero-dependency"
+  ],
+  "author": "antonidashaci",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonidashaci/lazy-img.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": [
+    "./index.js"
+  ]
+}
